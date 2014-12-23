@@ -11,6 +11,7 @@ config = YAML::load_file(File.join(__dir__, 'reports_config.yml'))
 server = config['cdm']['server']
 port = config['cdm']['port']
 cdm_url = "http://#{server}:#{port}/dmwebservices/index.php?q="
+download_dir = config['cdm']['download_dir']
 
 meta_map_config = config['meta_map']
 meta_map = meta_map_to_hash(meta_map_config)
@@ -25,7 +26,7 @@ repository_subjects = "Collection Name\tAlias\tObject Pointer\tItem Pointer\tVoc
 # collections = get_collections(cdm_url)
 # collection_aliases = get_collection_aliases(collections)
 
-collection_aliases = ['djscrew']
+collection_aliases = ['p15195coll2']
 
 collection_aliases.each do |collection_alias|
 
@@ -99,8 +100,8 @@ collection_aliases.each do |collection_alias|
   end
 
   repository_subjects << collection_subjects.sub("Collection Name\tAlias\tObject Pointer\tItem Pointer\tVocab\tOriginal Value\n", "")
-  File.open(File.join(__dir__, "subject_reports", "#{collection_title}_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') {|f| f.write(collection_subjects) }
+  File.open(File.join(download_dir, "subject_reports", "#{collection_title}_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') {|f| f.write(collection_subjects) }
 
 end
 
-File.open(File.join(__dir__, "subject_reports", "uhdl_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') {|f| f.write(repository_subjects) }
+File.open(File.join(download_dir, "subject_reports", "uhdl_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') {|f| f.write(repository_subjects) }
