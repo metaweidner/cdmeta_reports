@@ -4,10 +4,10 @@ require 'json'
 require 'nokogiri'
 require 'yaml'
 require 'colorize'
-require './repository.rb'
-require './collection.rb'
-require './compound_object.rb'
-require './item.rb'
+require './lib/repository.rb'
+require './lib/collection.rb'
+require './lib/compound_object.rb'
+require './lib/item.rb'
 
 # get repository configuration
 uhdl = Repository.new
