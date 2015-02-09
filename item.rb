@@ -8,11 +8,13 @@ class Item
     @names = get_names(info, labels_and_nicks)
   end
 
+  # get metadata from cdm api
   def get_item_info(cdm_url, collection_alias, pointer)
     cdm_item_info_url = cdm_url + "dmGetItemInfo/#{collection_alias}/#{pointer}/json"
     item_info = JSON.parse(open(cdm_item_info_url).read)
   end
 
+  # add subjects to hash based on vocabulary key
   def get_subjects(item_info, labels_and_nicks)
     subjects = {}
     subjects.store('lcsh', {'label' => 'Subject.Topical (LCSH)', 'value' => item_info[labels_and_nicks['Subject.Topical (LCSH)']]})
@@ -23,6 +25,7 @@ class Item
     subjects
   end
 
+  # add names to hash based on field/vocabulary key
   def get_names(item_info, labels_and_nicks)
     names = {}
     names.store('creator_lcnaf', {'label' => 'Creator (LCNAF)', 'value' => item_info[labels_and_nicks['Creator (LCNAF)']]})
@@ -61,6 +64,7 @@ class Item
     names
   end
 
+  # format report, one line for each value
   def break(container, id, pointer, function)
 
     if function == "subject_topical"
@@ -162,6 +166,7 @@ class Item
     end
   end
 
+  # split multi-value, semicolon delimited fields
   def split_values(vocab, container)
     strings = []
     if container[vocab]['value'].nil?

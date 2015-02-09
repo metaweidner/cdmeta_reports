@@ -9,25 +9,29 @@ require './collection.rb'
 require './compound_object.rb'
 require './item.rb'
 
-
+# get repository configuration
 uhdl = Repository.new
 
 puts "\nDownloading Repository Metadata: Names\n"
-collection_count = 0
-repository_names = "Collection Name\tAlias\tObject Pointer\tItem Pointer\tField and Vocab\tOriginal Value\n"
 
+# TSV header row
+repository_names = "Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n"
+
+# uncomment next two lines for all collections
 # collections = uhdl.get_collections(uhdl.cdm_url)
 # collection_aliases = uhdl.get_collection_aliases(collections)
 
+# or populate alias array for desired collections
 # collection_aliases = ['houhistory']
 collection_aliases = ['p15195coll39', 'p15195coll11']
 # collection_aliases = ['djscrew', 'hawk']
 
 collection_aliases.each do |collection_alias|
 
-  collection_count += 1
-  collection_names = "Collection Name\tAlias\tObject Pointer\tItem Pointer\tField and Vocab\tOriginal Value\n"
+  # TSV header row
+  collection_names = "Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n"
 
+  # get collection metadata mapping  
   collection = Collection.new(collection_alias, uhdl.cdm_url, uhdl.meta_map, uhdl.collection_long_titles, uhdl.collection_titles)
   print "\n\n#{collection.long_title} (#{collection_alias})...".red
   
@@ -44,6 +48,7 @@ collection_aliases.each do |collection_alias|
 
     if record['filetype'] == "cpd" # compound object
 
+      # get list of items in object
       compound_object = CompoundObject.new(uhdl.cdm_url, collection_alias, record['pointer'])
 
       compound_object.items.each do |pointer|
@@ -59,11 +64,15 @@ collection_aliases.each do |collection_alias|
     end
   end
 
-  repository_names << collection_names.sub("Collection Name\tAlias\tObject Pointer\tItem Pointer\tField and Vocab\tOriginal Value\n", "")
+  # add collection names to repository names string
+  repository_names << collection_names.sub("Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n", "")
+
+  # write collection names report
   File.open(File.join(uhdl.download_dir, "name_reports", "#{collection.title}_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(collection_names) }
 
 end
 
+# write repository names report
 File.open(File.join(uhdl.download_dir, "name_reports", "uhdl_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(repository_names) }
 
 puts "\n"

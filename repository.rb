@@ -18,12 +18,6 @@ class Repository
     @meta_map = meta_map_to_hash(meta_map_config)
   end
 
-  def collections_to_hash(collections_config)
-    collections_hash = {}
-    collections_config.each { |collection| collections_hash.store(collection['alias'], collection['title']) }
-    collections_hash
-  end
-
   def collection_titles_to_hash(collections_config)
     collections_hash = {}
     collections_config.each { |collection| collections_hash.store(collection['alias'], collection['title']) }

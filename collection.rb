@@ -17,22 +17,26 @@ class Collection
 
   end
 
+  # returns JSON from cdm api: dmGetCollectionFieldInfo
   def get_field_info(cdm_url, collection_alias)
     cdm_field_info_url = cdm_url + "dmGetCollectionFieldInfo/#{collection_alias}/json"
     field_info = JSON.parse(open(cdm_field_info_url).read)
   end
 
+  # returns field labels and cdm nicks in hash
   def get_labels_and_nicks(field_info)
     labels_and_nicks = {}
-    field_info.each {|field| labels_and_nicks.store(field['name'], field['nick'])}
+    field_info.each { |field| labels_and_nicks.store(field['name'], field['nick']) }
     labels_and_nicks
   end
 
+  # returns JSON from cdm api: dmQuery
   def get_items(cdm_url, collection_alias)
     cdm_items_url = cdm_url + "dmQuery/#{collection_alias}/0/title/title/2000/1/0/0/0/0/0/0/json"
     items = JSON.parse(open(cdm_items_url).read)
   end
 
+  # returns field mapping hash based on local YAML configuration file
   def get_collection_map(labels_and_nicks, meta_map)
     collection_map = {}
     field_map = {}
