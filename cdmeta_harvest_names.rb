@@ -19,8 +19,8 @@ repository_names = "Collection Name\tAlias\tObject Pointer\tItem Pointer\tField 
 # collections = uhdl.get_collections(uhdl.cdm_url)
 # collection_aliases = uhdl.get_collection_aliases(collections)
 
-collection_aliases = ['houhistory']
-# collection_aliases = ['p15195coll39', 'p15195coll11']
+# collection_aliases = ['houhistory']
+collection_aliases = ['p15195coll39', 'p15195coll11']
 # collection_aliases = ['djscrew', 'hawk']
 
 collection_aliases.each do |collection_alias|
@@ -40,7 +40,7 @@ collection_aliases.each do |collection_alias|
     item = Item.new(collection_alias, record['pointer'], uhdl.cdm_url, collection.labels_and_nicks)
     # break out names by field and vocabulary
     # and add names to collection names report
-    collection_names << item.break(item.names, id, record['pointer'])
+    collection_names << item.break(item.names, id, record['pointer'], "names")
 
     if record['filetype'] == "cpd" # compound object
 
@@ -52,7 +52,7 @@ collection_aliases.each do |collection_alias|
         item = Item.new(collection_alias, pointer, uhdl.cdm_url, collection.labels_and_nicks)
         # break out names by field and vocabulary
         # and add names to collection names report
-        collection_names << item.break(item.names, id, pointer)
+        collection_names << item.break(item.names, id, pointer, "names")
       end
 
       print "\\".blue
