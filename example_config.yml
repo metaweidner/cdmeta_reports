@@ -1,0 +1,41 @@
+cdm:
+  server: repository.url.edu
+  port: XX
+  download_dir: /path/to/download/directory
+
+# one entry for each collection in repository
+# alias must match cdm alias
+# title and long_title are arbitrary
+collections:
+  - alias: collection1
+    title: collection_01
+    long_title: Collection Number One
+  - alias: collection2
+    title: collection_02
+    long_title: Collection Number Two
+
+# one entry for every field in repository
+# typos in field labels on cdm server will produce errors
+meta_map:
+  - label: Title
+    namespace: dc
+    map: title
+    type:
+    vocab:
+  - label: Creator (LCNAF)
+    namespace: dc
+    map: creator
+    type:
+    vocab: lcnaf
+  - label: Creator (Local)
+    namespace: dc
+    map: creator
+    type:
+    vocab: uhdl
+
+meta_map_template:
+  - label: 
+    namespace:
+    map: 
+    type:
+    vocab:
