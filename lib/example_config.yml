@@ -18,23 +18,27 @@ collections:
 # typos in field labels on cdm server will produce errors
 meta_map:
   - label: Title
+    category: descriptive
     namespace: dc
     map: title
     type:
     vocab:
   - label: Creator (LCNAF)
-    namespace: dc
+    category: descriptive
+    namespace: dcterms
     map: creator
     type:
     vocab: lcnaf
   - label: Creator (Local)
-    namespace: dc
+    category: descriptive
+    namespace: dcterms
     map: creator
     type:
     vocab: uhdl
 
 meta_map_template:
   - label: 
+    category:
     namespace:
     map: 
     type:
