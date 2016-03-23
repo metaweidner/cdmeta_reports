@@ -4,16 +4,13 @@ class Repository
 
   def initialize
     config = YAML::load_file(File.join(__dir__, 'config.yml'))
-
     server = config['cdm']['server']
     port = config['cdm']['port']
     @cdm_url = "http://#{server}:#{port}/dmwebservices/index.php?q="
     @download_dir = config['cdm']['download_dir']
-
     collections_config = config['collections']
     @collection_titles = collection_titles_to_hash(collections_config)
     @collection_long_titles = collection_long_titles_to_hash(collections_config)
-
     meta_map_config = config['meta_map']
     @meta_map = meta_map_to_hash(meta_map_config)
   end
