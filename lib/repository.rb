@@ -1,12 +1,13 @@
 class Repository
 
-  attr_reader :cdm_url, :download_dir, :collection_titles, :collection_long_titles, :meta_map
+  attr_reader :cdm_url, :base_url, :download_dir, :collection_titles, :collection_long_titles, :meta_map
 
   def initialize
     config = YAML::load_file(File.join(__dir__, 'config.yml'))
     server = config['cdm']['server']
     port = config['cdm']['port']
     @cdm_url = "http://#{server}:#{port}/dmwebservices/index.php?q="
+    @base_url = "http://#{server}"
     @download_dir = config['cdm']['download_dir']
     collections_config = config['collections']
     @collection_titles = collection_titles_to_hash(collections_config)
