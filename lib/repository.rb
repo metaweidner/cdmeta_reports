@@ -1,12 +1,13 @@
 class Repository
 
-  attr_reader :cdm_url, :base_url, :download_dir, :collection_titles, :collection_long_titles, :meta_map
+  attr_reader :cdm_url, :get_file_url, :base_url, :download_dir, :collection_titles, :collection_long_titles, :meta_map
 
   def initialize
     config = YAML::load_file(File.join(__dir__, 'config.yml'))
     server = config['cdm']['server']
     port = config['cdm']['port']
     @cdm_url = "http://#{server}:#{port}/dmwebservices/index.php?q="
+    @get_file_url = "http://#{server}/contentdm/file/get/"
     @base_url = "http://#{server}"
     @download_dir = config['cdm']['download_dir']
     collections_config = config['collections']
@@ -30,7 +31,7 @@ class Repository
 
   def meta_map_to_hash(meta_map_config)
     meta_map_hash = {}
-    meta_map_config.each { |field| meta_map_hash.store(field['label'], {"label" => field['label'], "namespace" => field['namespace'], "map" => field['map'], "type" => field['type'], "vocab" => field['vocab']}) }
+    meta_map_config.each { |field| meta_map_hash.store(field['label'], {"label" => field['label'], "category" => field['category'], "namespace" => field['namespace'], "map" => field['map'], "type" => field['type'], "vocab" => field['vocab']}) }
     meta_map_hash
   end
 
