@@ -5,3 +5,5 @@ find_cdm_config_anomalies.rb
 find_tech_at_object_level.rb
 harvest_original_collections.rb
 write_metadata.rb
+harvest_test_collections.rb
+harvest_test_collection_file_level_descriptive_metadata.rb
