@@ -1,6 +1,6 @@
 class Repository
 
-  attr_reader :cdm_url, :get_file_url, :base_url, :download_dir, :collection_titles, :collection_long_titles, :meta_map
+  attr_reader :cdm_url, :get_file_url, :base_url, :download_dir, :log_dir, :collection_titles, :collection_long_titles, :meta_map
 
   def initialize
     config = YAML::load_file(File.join(__dir__, 'config.yml'))
@@ -10,6 +10,7 @@ class Repository
     @get_file_url = "http://#{server}/contentdm/file/get/"
     @base_url = "http://#{server}"
     @download_dir = config['cdm']['download_dir']
+    @log_dir = File.join(@download_dir, 'logs')
     collections_config = config['collections']
     @collection_titles = collection_titles_to_hash(collections_config)
     @collection_long_titles = collection_long_titles_to_hash(collections_config)
