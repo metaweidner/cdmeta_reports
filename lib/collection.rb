@@ -1,11 +1,12 @@
 class Collection
 
-  attr_reader :map, :long_title, :title, :items
+  attr_reader :alias, :labels_and_nicks, :map, :long_title, :title, :items
 
   def initialize(collection_alias, repository)
+    @alias = collection_alias
     # get field information and map to config file
     field_info = get_field_info(repository.cdm_url, collection_alias)
-    labels_and_nicks = get_labels_and_nicks(field_info)
+    @labels_and_nicks = get_labels_and_nicks(field_info)
     @map = get_collection_map(labels_and_nicks, repository.meta_map)
     # get titles
     @long_title = repository.collection_long_titles.fetch(collection_alias)
