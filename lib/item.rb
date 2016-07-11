@@ -1,69 +1,61 @@
 class Item
 
-  attr_reader :subjects, :names
+  attr_reader :metadata, :fields, :url, :level
 
-  def initialize(collection_alias, pointer, cdm_url, labels_and_nicks)
-    info = get_item_info(cdm_url, collection_alias, pointer)
-    @subjects = get_subjects(info, labels_and_nicks)
-    @names = get_names(info, labels_and_nicks)
+  def initialize(repository, collection, level, object_pointer, item_pointer=nil)
+    @level = level
+    if level == 'object'
+      @metadata = get_item_metadata(repository, collection, object_pointer)
+      @url = "#{repository.base_url}/collection/#{collection.alias}/item/#{object_pointer}"
+    else
+      @metadata = get_item_metadata(repository, collection, item_pointer)
+      @url = "#{repository.base_url}/collection/#{collection.alias}/item/#{object_pointer}/show/#{item_pointer}"
+    end
+    @fields = Hash.new
+    begin
+      collection.labels_and_nicks.each {|label, nick| @fields[label] = @metadata.fetch(nick).to_s }      
+    rescue Exception
+      print "KeyNotFound..."
+      timestamp = Time.now.strftime("%Y%m%d_%k%M%S")
+      File.open(File.join(repository.log_dir, "UHDLMysteryObjects.txt"), 'a') do |f|
+        f.puts "#{timestamp}\tKeyNotFound\t#{collection.title}\t#{@url}\n"
+        f.close
+      end
+    end
   end
 
-  # get metadata from cdm api
-  def get_item_info(cdm_url, collection_alias, pointer)
-    cdm_item_info_url = cdm_url + "dmGetItemInfo/#{collection_alias}/#{pointer}/json"
-    item_info = JSON.parse(open(cdm_item_info_url).read)
+  # get metadata hash from cdm api
+  def get_item_metadata(repository, collection, pointer)
+    cdm_item_metadata_url = repository.cdm_url + "dmGetItemInfo/#{collection.alias}/#{pointer}/json"
+    item_metadata = JSON.parse(open(cdm_item_metadata_url).read)
   end
 
-  # add subjects to hash based on vocabulary key
-  def get_subjects(item_info, labels_and_nicks)
-    subjects = {}
-    subjects.store('lcsh', {'label' => 'Subject.Topical (LCSH)', 'value' => item_info[labels_and_nicks['Subject.Topical (LCSH)']]})
-    subjects.store('tgm', {'label' => 'Subject.Topical (TGM-1)', 'value' => item_info[labels_and_nicks['Subject.Topical (TGM-1)']]})
-    subjects.store('aat', {'label' => 'Subject.Topical (AAT)', 'value' => item_info[labels_and_nicks['Subject.Topical (AAT)']]})
-    subjects.store('saa', {'label' => 'Subject.Topical (SAA)', 'value' => item_info[labels_and_nicks['Subject.Topical (SAA)']]})
-    subjects.store('local', {'label' => 'Subject.Topical (Local)', 'value' => item_info[labels_and_nicks['Subject.Topical (Local)']]})
-    subjects
+  # split multi-value, semicolon delimited fields into array
+  def split_field(data)
+    strings = []
+    values = data.split(";")
+    values.each { |v| strings << v.strip }
+    strings
   end
 
-  # add names to hash based on field/vocabulary key
-  def get_names(item_info, labels_and_nicks)
-    names = {}
-    names.store('creator_lcnaf', {'label' => 'Creator (LCNAF)', 'value' => item_info[labels_and_nicks['Creator (LCNAF)']]})
-    names.store('creator_ulan', {'label' => 'Creator (ULAN)', 'value' => item_info[labels_and_nicks['Creator (ULAN)']]})
-    names.store('creator_hot', {'label' => 'Creator (HOT)', 'value' => item_info[labels_and_nicks['Creator (HOT)']]})
-    names.store('creator_local', {'label' => 'Creator (Local)', 'value' => item_info[labels_and_nicks['Creator (Local)']]})
-    names.store('contributor_lcnaf', {'label' => 'Contributor (LCNAF)', 'value' => item_info[labels_and_nicks['Contributor (LCNAF)']]})
-    names.store('contributor_ulan', {'label' => 'Contributor (ULAN)', 'value' => item_info[labels_and_nicks['Contributor (ULAN)']]})
-    names.store('contributor_hot', {'label' => 'Contributor (HOT)', 'value' => item_info[labels_and_nicks['Contributor (HOT)']]})
-    names.store('contributor_local', {'label' => 'Contributor (Local)', 'value' => item_info[labels_and_nicks['Contributor (Local)']]})
-    names.store('subj_name_lcnaf', {'label' => 'Subject.Name (LCNAF)', 'value' => item_info[labels_and_nicks['Subject.Name (LCNAF)']]})
-    names.store('subj_name_ulan', {'label' => 'Subject.Name (ULAN)', 'value' => item_info[labels_and_nicks['Subject.Name (ULAN)']]})
-    names.store('subj_name_hot', {'label' => 'Subject.Name (HOT)', 'value' => item_info[labels_and_nicks['Subject.Name (HOT)']]})
-    names.store('subj_name_local', {'label' => 'Subject.Name (Local)', 'value' => item_info[labels_and_nicks['Subject.Name (Local)']]})
-    names.store('author_lcnaf', {'label' => 'Author (LCNAF)', 'value' => item_info[labels_and_nicks['Author (LCNAF)']]})
-    names.store('author_ulan', {'label' => 'Author (ULAN)', 'value' => item_info[labels_and_nicks['Author (ULAN)']]})
-    names.store('author_hot', {'label' => 'Author (HOT)', 'value' => item_info[labels_and_nicks['Author (HOT)']]})
-    names.store('author_local', {'label' => 'Author (Local)', 'value' => item_info[labels_and_nicks['Author (Local)']]})
-    names.store('artist_lcnaf', {'label' => 'Artist (LCNAF)', 'value' => item_info[labels_and_nicks['Artist (LCNAF)']]})
-    names.store('artist_ulan', {'label' => 'Artist (ULAN)', 'value' => item_info[labels_and_nicks['Artist (ULAN)']]})
-    names.store('artist_hot', {'label' => 'Artist (HOT)', 'value' => item_info[labels_and_nicks['Artist (HOT)']]})
-    names.store('artist_local', {'label' => 'Artist (Local)', 'value' => item_info[labels_and_nicks['Artist (Local)']]})
-    names.store('composer_lcnaf', {'label' => 'Composer (LCNAF)', 'value' => item_info[labels_and_nicks['Composer (LCNAF)']]})
-    names.store('composer_ulan', {'label' => 'Composer (ULAN)', 'value' => item_info[labels_and_nicks['Composer (ULAN)']]})
-    names.store('composer_hot', {'label' => 'Composer (HOT)', 'value' => item_info[labels_and_nicks['Composer (HOT)']]})
-    names.store('composer_local', {'label' => 'Composer (Local)', 'value' => item_info[labels_and_nicks['Composer (Local)']]})
-    names.store('added_composer_lcnaf', {'label' => 'Added Composers (LCNAF)', 'value' => item_info[labels_and_nicks['Added Composers (LCNAF)']]})
-    names.store('added_composer_ulan', {'label' => 'Added Composers (ULAN)', 'value' => item_info[labels_and_nicks['Added Composers (ULAN)']]})
-    names.store('added_composer_hot', {'label' => 'Added Composers (HOT)', 'value' => item_info[labels_and_nicks['Added Composers (HOT)']]})
-    names.store('added_composer_local', {'label' => 'Added Composers (Local)', 'value' => item_info[labels_and_nicks['Added Composers (Local)']]})
-    names.store('interviewer_lcnaf', {'label' => 'Interviewer (LCNAF)', 'value' => item_info[labels_and_nicks['Interviewer (LCNAF)']]})
-    names.store('interviewer_ulan', {'label' => 'Interviewer (ULAN)', 'value' => item_info[labels_and_nicks['Interviewer (ULAN)']]})
-    names.store('interviewer_hot', {'label' => 'Interviewer (HOT)', 'value' => item_info[labels_and_nicks['Interviewer (HOT)']]})
-    names.store('interviewer_local', {'label' => 'Interviewer (Local)', 'value' => item_info[labels_and_nicks['Interviewer (Local)']]})
-    names.store('co_creator', {'label' => 'Co-creator', 'value' => item_info[labels_and_nicks['Co-creator']]})
-    names
+  # split coordinates string into array
+  def split_geographic(data)
+    if data == nil
+      coordinates = ["",""]
+    elsif data.include? ";"
+      coordinates = []
+      values = data.split(';')
+      values.each { |v| coordinates << v.strip }
+      coordinates        
+    else
+      coordinates = []
+      values = data.split(',')
+      values.each { |v| coordinates << v.strip }
+      coordinates        
+    end
   end
 
+<<<<<<< HEAD
   # format report, one line for each value
   def break(container, id, pointer, function)
 
@@ -160,12 +152,20 @@ class Item
       interviewer_hot.each { |name| collection_names << "#{id}\t#{pointer}\tinterviewer_hot\t#{name}\n" } if interviewer_hot[0]
       interviewer_local.each { |name| collection_names << "#{id}\t#{pointer}\tinterviewer_local\t#{name}\n" } if interviewer_local[0]
       co_creator.each { |name| collection_names << "#{id}\t#{pointer}\tco_creator\t#{name}\n" } if co_creator[0]
+=======
+  def validate_iso_date(date_iso) # returns true or false
+    response = JSON.parse(open(URI.escape("http://digital2.library.unt.edu/edtf/isValid.json?date=#{date_iso}")).read)
+    response.fetch('validEDTF')
+  end
+>>>>>>> origin/master
 
-      return collection_names
-    else
-    end
+  def new_file_name(metadata)
+    cdm_file_name = metadata.fetch("find").split(".")
+    original_file_name = metadata.fetch("file").split(".")
+    new_file_name = "#{original_file_name[0]}.#{cdm_file_name[1]}"
   end
 
+<<<<<<< HEAD
   # split multi-value, semicolon delimited fields
   def split_values(vocab, container)
     strings = []
@@ -177,9 +177,14 @@ class Item
         values.each { |v| strings << v.strip }
       else
         strings << container[vocab]['value'].strip
+=======
+  def download_file(download_dir, file_name, get_file_url, collection_alias, pointer)
+    File.open(File.join(download_dir, file_name), "wb") do |saved_file|
+      open(File.join(get_file_url, collection_alias, pointer.to_s), "rb") do |read_file|
+        saved_file.write(read_file.read)
+>>>>>>> origin/master
       end
     end
-    strings
   end
 
 end
