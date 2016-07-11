@@ -23,7 +23,7 @@ repository_names = "Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n"
 
 # or populate alias array for desired collections
 # collection_aliases = ['houhistory']
-collection_aliases = ['p15195coll39', 'p15195coll11']
+collection_aliases = %w(p15195coll39 p15195coll11)
 # collection_aliases = ['djscrew', 'hawk']
 
 collection_aliases.each do |collection_alias|
@@ -44,9 +44,9 @@ collection_aliases.each do |collection_alias|
     item = Item.new(collection_alias, record['pointer'], uhdl.cdm_url, collection.labels_and_nicks)
     # break out names by field and vocabulary
     # and add names to collection names report
-    collection_names << item.break(item.names, id, record['pointer'], "names")
+    collection_names << item.break(item.names, id, record['pointer'], 'names')
 
-    if record['filetype'] == "cpd" # compound object
+    if record['filetype'] == 'cpd' # compound object
 
       # get list of items in object
       compound_object = CompoundObject.new(uhdl.cdm_url, collection_alias, record['pointer'])
@@ -57,7 +57,7 @@ collection_aliases.each do |collection_alias|
         item = Item.new(collection_alias, pointer, uhdl.cdm_url, collection.labels_and_nicks)
         # break out names by field and vocabulary
         # and add names to collection names report
-        collection_names << item.break(item.names, id, pointer, "names")
+        collection_names << item.break(item.names, id, pointer, 'names')
       end
 
       print "\\".blue
@@ -65,14 +65,14 @@ collection_aliases.each do |collection_alias|
   end
 
   # add collection names to repository names string
-  repository_names << collection_names.sub("Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n", "")
+  repository_names << collection_names.sub("Collection\tAlias\tObject\tItem\tField_Vocab\tValue\n", '')
 
   # write collection names report
-  File.open(File.join(uhdl.download_dir, "name_reports", "#{collection.title}_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(collection_names) }
+  File.open(File.join(uhdl.download_dir, 'name_reports', "#{collection.title}_#{Time.now.strftime('%Y%m%d_%k%M%S')}.tsv"), 'w') { |f| f.write(collection_names) }
 
 end
 
 # write repository names report
-File.open(File.join(uhdl.download_dir, "name_reports", "uhdl_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(repository_names) }
+File.open(File.join(uhdl.download_dir, 'name_reports', "uhdl_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.tsv"), 'w') { |f| f.write(repository_names) }
 
 puts "\n"

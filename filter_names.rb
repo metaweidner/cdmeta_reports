@@ -61,16 +61,16 @@ File.open(ARGV[0], 'r') do |f|
   end
 
   # write files for each vocab with sorted unique values
-  File.open(File.join(__dir__, "lcnaf_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "lcnaf_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     lcnaf.sort.each {|element| f.puts(element) }
   end
-  File.open(File.join(__dir__, "ulan_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "ulan_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     ulan.sort.each {|element| f.puts(element) }
   end
-  File.open(File.join(__dir__, "hot_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "hot_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     hot.sort.each {|element| f.puts(element) }
   end
-  File.open(File.join(__dir__, "local_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "local_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     local.sort.each {|element| f.puts(element) }
   end
 end

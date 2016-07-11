@@ -45,14 +45,14 @@ class Collection
       collection_map.store(nick, field_map)
     end
     # contentdm metadata fields
-    collection_map.store("dmaccess", {"label" => "dmaccess", "namespace" => "cdm", "map" => "dmAccess", "type" => nil, "vocab" => nil})
-    collection_map.store("dmimage", {"label" => "dmimage", "namespace" => "cdm", "map" => "dmImage", "type" => nil, "vocab" => nil})
-    collection_map.store("restrictionCode", {"label" => "restrictionCode", "namespace" => "cdm", "map" => "restrictionCode", "type" => nil, "vocab" => nil})
-    collection_map.store("cdmfilesize", {"label" => "cdmfilesize", "namespace" => "cdm", "map" => "fileSize", "type" => nil, "vocab" => nil})
-    collection_map.store("cdmfilesizeformatted", {"label" => "cdmfilesizeformatted", "namespace" => "cdm", "map" => "fileSizeFormatted", "type" => nil, "vocab" => nil})
-    collection_map.store("cdmprintpdf", {"label" => "cdmprintpdf", "namespace" => "cdm", "map" => "printPDF", "type" => nil, "vocab" => nil})
-    collection_map.store("cdmhasocr", {"label" => "cdmhasocr", "namespace" => "cdm", "map" => "hasOCR", "type" => nil, "vocab" => nil})
-    collection_map.store("cdmisnewspaper", {"label" => "cdmisnewspaper", "namespace" => "cdm", "map" => "isNewspaper", "type" => nil, "vocab" => nil})
+    collection_map.store('dmaccess', {'label' => 'dmaccess', 'namespace' => 'cdm', 'map' => 'dmAccess', 'type' => nil, 'vocab' => nil})
+    collection_map.store('dmimage', {'label' => 'dmimage', 'namespace' => 'cdm', 'map' => 'dmImage', 'type' => nil, 'vocab' => nil})
+    collection_map.store('restrictionCode', {'label' => 'restrictionCode', 'namespace' => 'cdm', 'map' => 'restrictionCode', 'type' => nil, 'vocab' => nil})
+    collection_map.store('cdmfilesize', {'label' => 'cdmfilesize', 'namespace' => 'cdm', 'map' => 'fileSize', 'type' => nil, 'vocab' => nil})
+    collection_map.store('cdmfilesizeformatted', {'label' => 'cdmfilesizeformatted', 'namespace' => 'cdm', 'map' => 'fileSizeFormatted', 'type' => nil, 'vocab' => nil})
+    collection_map.store('cdmprintpdf', {'label' => 'cdmprintpdf', 'namespace' => 'cdm', 'map' => 'printPDF', 'type' => nil, 'vocab' => nil})
+    collection_map.store('cdmhasocr', {'label' => 'cdmhasocr', 'namespace' => 'cdm', 'map' => 'hasOCR', 'type' => nil, 'vocab' => nil})
+    collection_map.store('cdmisnewspaper', {'label' => 'cdmisnewspaper', 'namespace' => 'cdm', 'map' => 'isNewspaper', 'type' => nil, 'vocab' => nil})
     collection_map
   end
 

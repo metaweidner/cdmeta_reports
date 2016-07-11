@@ -67,9 +67,9 @@ class Item
   # format report, one line for each value
   def break(container, id, pointer, function)
 
-    if function == "subject_topical"
+    if function == 'subject_topical'
 
-      collection_subjects = ""
+      collection_subjects = ''
       
       # break out subjects by vocabulary
       container['lcsh']['value'].class == Hash ? lcsh = [] : lcsh = split_values('lcsh', container)
@@ -87,9 +87,9 @@ class Item
 
       return collection_subjects
 
-    elsif function == "names"
+    elsif function == 'names'
 
-      collection_names = ""
+      collection_names = ''
 
       # break out names by field and vocabulary
       container['creator_lcnaf']['value'].class == Hash ? creator_lcnaf = [] : creator_lcnaf = split_values('creator_lcnaf', container)
@@ -172,8 +172,8 @@ class Item
     if container[vocab]['value'].nil?
       return strings
     else
-      if container[vocab]['value'].include? ";"
-        values = container[vocab]['value'].split(";")
+      if container[vocab]['value'].include? ';'
+        values = container[vocab]['value'].split(';')
         values.each { |v| strings << v.strip }
       else
         strings << container[vocab]['value'].strip
