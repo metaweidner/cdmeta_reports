@@ -23,11 +23,11 @@ file_download = 'no'
 # file_download = 'yes'
 
 # uncomment next two lines for all collections
-collections = uhdl.get_collections(uhdl.cdm_url)
-collection_aliases = uhdl.get_collection_aliases(collections)
+# collections = uhdl.get_collections(uhdl.cdm_url)
+# collection_aliases = uhdl.get_collection_aliases(collections)
 
 # or populate alias array for desired collections
-# collection_aliases = ['p15195coll5','p15195coll17','p15195coll2','p15195coll10','p15195coll26','p15195coll4','p15195coll3','uhtt','p15195coll6','hca30','ville']
+collection_aliases = ['p15195coll5','p15195coll17','p15195coll2','p15195coll10','p15195coll26','p15195coll4','p15195coll3','uhtt','p15195coll6','hca30','ville']
 # collection_aliases = ['p15195coll4' ,'hca30', 'ville']
 # collection_aliases = ['hca30', 'ville', '2013_009']
 # collection_aliases = ['2013_009'] # dj styles
@@ -41,7 +41,7 @@ collection_aliases = uhdl.get_collection_aliases(collections)
 # collection_aliases = ['mcdav']
 # collection_aliases = ['p15195coll15'] # ship of fools woodcuts
 # collection_aliases = ['p15195coll3'] # uh buildings
-collection_aliases = ['p15195coll34'] # 1850s 1860s hotel menus
+# collection_aliases = ['p15195coll34'] # 1850s 1860s hotel menus
 # collection_aliases = ['p15195coll22'] # uss houston bluebonnet newsletters
 # collection_aliases = ['slough']
 
@@ -52,7 +52,7 @@ collection_aliases.each_with_index do |collection_alias, index|
   print "\n\n#{collection.long_title} (#{collection_alias})...".red
 
   # set up reports
-  report = Report.new('open_refine', uhdl, collection, 'collection_cleanup', 'tsv')  
+  report = Report.new('open_refine', uhdl, collection, 'test_collections', 'tsv')  
   report.collection_data << report.header
   report.repository_data << report.header if index == 0
 
@@ -94,7 +94,7 @@ collection_aliases.each_with_index do |collection_alias, index|
     else #single item
       # get item metadata
       item = Item.new(uhdl, collection, 'object', record['pointer'])
-      metadata = Cdmeta.new(collection.alias, report, item, 'single')
+      metadata = Cdmeta.new(collection, report, item, 'single')
       # add row to report
       report.collection_data << metadata.add_row(metadata)
 
