@@ -55,7 +55,6 @@ class Item
     end
   end
 
-<<<<<<< HEAD
   # format report, one line for each value
   def break(container, id, pointer, function)
 
@@ -152,12 +151,13 @@ class Item
       interviewer_hot.each { |name| collection_names << "#{id}\t#{pointer}\tinterviewer_hot\t#{name}\n" } if interviewer_hot[0]
       interviewer_local.each { |name| collection_names << "#{id}\t#{pointer}\tinterviewer_local\t#{name}\n" } if interviewer_local[0]
       co_creator.each { |name| collection_names << "#{id}\t#{pointer}\tco_creator\t#{name}\n" } if co_creator[0]
-=======
+    end
+  end
+
   def validate_iso_date(date_iso) # returns true or false
     response = JSON.parse(open(URI.escape("http://digital2.library.unt.edu/edtf/isValid.json?date=#{date_iso}")).read)
     response.fetch('validEDTF')
   end
->>>>>>> origin/master
 
   def new_file_name(metadata)
     cdm_file_name = metadata.fetch("find").split(".")
@@ -165,7 +165,6 @@ class Item
     new_file_name = "#{original_file_name[0]}.#{cdm_file_name[1]}"
   end
 
-<<<<<<< HEAD
   # split multi-value, semicolon delimited fields
   def split_values(vocab, container)
     strings = []
@@ -177,12 +176,14 @@ class Item
         values.each { |v| strings << v.strip }
       else
         strings << container[vocab]['value'].strip
-=======
+      end
+    end
+  end
+
   def download_file(download_dir, file_name, get_file_url, collection_alias, pointer)
     File.open(File.join(download_dir, file_name), "wb") do |saved_file|
       open(File.join(get_file_url, collection_alias, pointer.to_s), "rb") do |read_file|
         saved_file.write(read_file.read)
->>>>>>> origin/master
       end
     end
   end
