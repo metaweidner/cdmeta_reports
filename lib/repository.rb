@@ -33,7 +33,7 @@ class Repository
   def meta_map_to_hash(meta_map_config)
     meta_map_hash = {}
     meta_map_config.each { |field| meta_map_hash.store(field['label'], {'label' => field['label'], 'namespace' => field['namespace'], 'map' => field['map'], 'type' => field['type'], 'vocab' => field['vocab']}) }
-    meta_map_config.each { |field| meta_map_hash.store(field['label'], {"label" => field['label'], "category" => field['category'], "namespace" => field['namespace'], "map" => field['map'], "type" => field['type'], "vocab" => field['vocab']}) }
+    meta_map_config.each { |field| meta_map_hash.store(field['label'], {'label' => field['label'], 'category' => field['category'], 'namespace' => field['namespace'], 'map' => field['map'], 'type' => field['type'], 'vocab' => field['vocab']}) }
     meta_map_hash
   end
 

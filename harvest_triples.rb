@@ -16,7 +16,7 @@ uhdl = Repository.new
 
 puts "\nDownloading Collections\n"
 
-time_stamp = Time.now.strftime("%Y%m%d_%k%M%S")
+time_stamp = Time.now.strftime('%Y%m%d_%k%M%S')
 
 # uncomment next two lines for all collections
 collections = uhdl.get_collections(uhdl.cdm_url)
@@ -73,11 +73,11 @@ collection_aliases.each_with_index do |collection_alias, index|
   # write collection report
   report.write(report.collection_dir, report.name, report.collection_data)
   # add collection report to repository report
-  report.repository_data << report.collection_data.sub(report.header, "") 
+  report.repository_data << report.collection_data.sub(report.header, '')
   # append to repository report
   report.append(report.dir, "uhdl_#{report.type}_#{time_stamp}.#{report.format}", report.repository_data)
 
-  print "END".red
+  print 'END'.red
 end
 
 puts "\n"
