@@ -60,7 +60,7 @@ class Cdmeta
               :dcterms_identifier,
               :dcterms_source
 
-  def initialize(collection_alias, report, item, object_type=nil)
+  def initialize(collection, report, item, object_type=nil)
 
     @report_type = report.type
     @report_format = report.format
@@ -95,7 +95,7 @@ class Cdmeta
       # 
       item.fields['Alternative Title'] == "{}" ? @dcterms_alternative = "" : @dcterms_alternative = item.fields['Alternative Title'].delete("\n").gsub("\t", " ").chomp(';')
 
-      if collection_alias == 'p15195coll16' # historic texas postcards
+      if collection.alias == 'p15195coll16' # historic texas postcards
         # 
         # dcterms_creator_lcnaf
         # 
@@ -116,7 +116,7 @@ class Cdmeta
         # 
         item.fields['Creator (Printer) (Local)'] == "{}" ? @dcterms_creator_uhlib = "" : @dcterms_creator_uhlib = item.fields['Creator (Printer) (Local)'].delete("\n").gsub("\t", " ").chomp(';')
 
-      elsif collection_alias == 'p15195coll15' # ship of fools woodcuts
+      elsif collection.alias == 'p15195coll15' # ship of fools woodcuts
         # 
         # dcterms_creator_lcnaf
         # 
@@ -159,7 +159,7 @@ class Cdmeta
         item.fields['Creator (Local)'] == "{}" ? @dcterms_creator_uhlib = "" : @dcterms_creator_uhlib = item.fields['Creator (Local)'].delete("\n").gsub("\t", " ").chomp(';')
       end
 
-      if collection_alias == 'reims'
+      if collection.alias == 'reims'
         # 
         # dcterms_contributor_lcnaf
         # 
@@ -180,7 +180,7 @@ class Cdmeta
         # 
         item.fields['Scribe (Local)'] == "{}" ? @dcterms_contributor_uhlib = "" : @dcterms_contributor_uhlib = item.fields['Scribe (Local)'].delete("\n") + ", scribe"
 
-      elsif collection_alias == 'p15195coll15' # ship of fools woodcuts
+      elsif collection.alias == 'p15195coll15' # ship of fools woodcuts
         # 
         # dcterms_contributor_lcnaf
         # 
@@ -222,7 +222,7 @@ class Cdmeta
         item.fields['Contributor (Local)'] == "{}" ? @dcterms_contributor_uhlib = "" : @dcterms_contributor_uhlib = item.fields['Contributor (Local)'].delete("\n").gsub("\t", " ").chomp(';')
       end
 
-      if collection_alias == 'sham'
+      if collection.alias == 'sham'
         # 
         # convert printer field to dcterms_contributor_uhlib
         # 
@@ -310,7 +310,7 @@ class Cdmeta
       # dcterms_description
       # 
       item.fields['Description'] == "{}" ? @dcterms_description = "" : @dcterms_description = item.fields['Description'].gsub("\n", " ").gsub("\t", " ").chomp
-      if collection_alias == 'p15195coll16' # historic texas postcards
+      if collection.alias == 'p15195coll16' # historic texas postcards
         item.fields['About the Date'] == "{}" ? about_the_date = "" : about_the_date = item.fields['About the Date'].gsub("\n", " ").gsub("\t", " ").chomp
         @dcterms_description == "" ? @dcterms_description << about_the_date : @dcterms_description << " " + about_the_date
       end
