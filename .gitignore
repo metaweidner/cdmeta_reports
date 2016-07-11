@@ -1,6 +1,7 @@
 .DS_Store
 config.yml
 *.txt
+.idea/*
 find_cdm_config_anomalies.rb
 find_tech_at_object_level.rb
 harvest_original_collections.rb
