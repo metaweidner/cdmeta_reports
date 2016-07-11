@@ -23,13 +23,13 @@ File.open(ARGV[0], 'r') do |f|
     value = data[5]
 
     # write unique values to vocab arrays
-    if (vocab == 'lcsh')
+    if vocab == 'lcsh'
       lcsh << value unless lcsh.include? value
-    elsif (vocab == 'tgm')
+    elsif vocab == 'tgm'
       tgm << value unless tgm.include? value
-    elsif (vocab == 'aat')
+    elsif vocab == 'aat'
       aat << value unless aat.include? value
-    elsif (vocab == 'saa')
+    elsif vocab == 'saa'
       saa << value unless saa.include? value
     else
       local << value unless local.include? value
@@ -37,19 +37,19 @@ File.open(ARGV[0], 'r') do |f|
   end
 
   # write files for each vocab with sorted unique values
-  File.open(File.join(__dir__, "lcsh_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "lcsh_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     lcsh.sort.each {|value| f.puts(value) }
   end
-  File.open(File.join(__dir__, "tgm_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "tgm_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     tgm.sort.each {|value| f.puts(value) }
   end
-  File.open(File.join(__dir__, "aat_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "aat_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     aat.sort.each {|value| f.puts(value) }
   end
-  File.open(File.join(__dir__, "saa_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "saa_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     saa.sort.each {|value| f.puts(value) }
   end
-  File.open(File.join(__dir__, "local_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
+  File.open(File.join(__dir__, "local_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     local.sort.each {|value| f.puts(value) }
   end
 end

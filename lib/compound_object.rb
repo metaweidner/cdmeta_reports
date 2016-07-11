@@ -15,7 +15,7 @@ class CompoundObject
 
   # parse dmGetCompoundObjectInfo XML
   def get_compound_object_items(info)
-    compound_object_items = info.xpath("//pageptr/text()")
+    compound_object_items = info.xpath('//pageptr/text()')
   end
 
 end

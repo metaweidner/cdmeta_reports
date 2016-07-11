@@ -32,12 +32,16 @@ class Repository
 
   def meta_map_to_hash(meta_map_config)
     meta_map_hash = {}
+<<<<<<< HEAD
+    meta_map_config.each { |field| meta_map_hash.store(field['label'], {'label' => field['label'], 'namespace' => field['namespace'], 'map' => field['map'], 'type' => field['type'], 'vocab' => field['vocab']}) }
+=======
     meta_map_config.each { |field| meta_map_hash.store(field['label'], {"label" => field['label'], "category" => field['category'], "namespace" => field['namespace'], "map" => field['map'], "type" => field['type'], "vocab" => field['vocab']}) }
+>>>>>>> origin/master
     meta_map_hash
   end
 
   def get_collections(cdm_url)
-    cdm_collections_url = cdm_url + "dmGetCollectionList/json"
+    cdm_collections_url = cdm_url + 'dmGetCollectionList/json'
     collections = JSON.parse(open(cdm_collections_url).read)
   end
 
