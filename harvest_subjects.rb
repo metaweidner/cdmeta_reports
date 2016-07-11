@@ -38,13 +38,11 @@ collection_aliases.each do |collection_alias|
 
     print "#{record['pointer']}..".green
 
-<<<<<<< HEAD
     # get metadata and subjects
     item = Item.new(collection_alias, record['pointer'], uhdl.cdm_url, collection.labels_and_nicks)
     # break out subjects by vocabulary
     # and add names to collection names report
     collection_subjects << item.break(item.subjects, id, record['pointer'], 'subject_topical')
-=======
     object_url = "#{uhdl.base_url}/collection/#{collection_alias}/item/#{record['pointer']}"
 
     # get item metadata
@@ -71,7 +69,6 @@ collection_aliases.each do |collection_alias|
         end
       end
     end
->>>>>>> origin/master
 
     if record['filetype'] == 'cpd' # compound object
 
@@ -80,13 +77,11 @@ collection_aliases.each do |collection_alias|
 
       compound_object.items.each do |pointer|
         print "#{pointer}.".blue
-<<<<<<< HEAD
         # get metadata and subjects
         item = Item.new(collection_alias, record['pointer'], uhdl.cdm_url, collection.labels_and_nicks)
         # break out subjects by vocabulary
         # and add names to collection names report
         collection_subjects << item.break(item.subjects, id, pointer, 'subject_topical')
-=======
         # get item metadata
         item = Item.new(collection_alias, pointer, uhdl.cdm_url)
         # and cycle through all of the elements
@@ -111,32 +106,25 @@ collection_aliases.each do |collection_alias|
             end
           end
         end
->>>>>>> origin/master
       end
       print "\\".blue
     end
   end
 
   # add collection subjects to repository subjects string
-<<<<<<< HEAD
   repository_subjects << collection_subjects.sub("Collection\tAlias\tObject\tItem\tVocab\tValue\n", '')
 
   # write collection subjects report
   File.open(File.join(uhdl.download_dir, 'subject_reports', "#{collection.title}_#{Time.now.strftime('%Y%m%d_%k%M%S')}.tsv"), 'w') { |f| f.write(collection_subjects) }
-=======
   repository_report << collection_report.sub(tsv_header, "")
 
   # write collection subjects report
   File.open(File.join(uhdl.download_dir, "subject_reports", "#{collection.title}_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(collection_report) }
->>>>>>> origin/master
 
 end
 
 # write repository subjects report
-<<<<<<< HEAD
 File.open(File.join(uhdl.download_dir, 'subject_reports', "uhdl_subjects_#{Time.now.strftime('%Y%m%d_%k%M%S')}.tsv"), 'w') { |f| f.write(repository_subjects) }
-=======
 File.open(File.join(uhdl.download_dir, "subject_reports", "uhdl_subjects_#{Time.now.strftime("%Y%m%d_%k%M%S")}.tsv"), 'w') { |f| f.write(repository_report) }
->>>>>>> origin/master
 
 puts "\n"

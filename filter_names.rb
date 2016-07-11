@@ -61,7 +61,6 @@ File.open(ARGV[0], 'r') do |f|
   end
 end
 
-<<<<<<< HEAD
 # write files for each vocab with sorted unique values
 File.open(File.join(__dir__, "lcnaf_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.txt"), 'w') do |f|
   lcnaf.sort_by! { |e| e[0] }
@@ -93,7 +92,6 @@ File.open(File.join(__dir__, "local_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.
     line = ""
     heading.each { |h| line << h + "\t" }
     f.write(line.chomp("\t") + "\n")
-=======
   # write files for each vocab with sorted unique values
   File.open(File.join(__dir__, "lcnaf_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     lcnaf.sort.each {|element| f.puts(element) }
@@ -106,6 +104,5 @@ File.open(File.join(__dir__, "local_names_#{Time.now.strftime("%Y%m%d_%k%M%S")}.
   end
   File.open(File.join(__dir__, "local_names_#{Time.now.strftime('%Y%m%d_%k%M%S')}.txt"), 'w') do |f|
     local.sort.each {|element| f.puts(element) }
->>>>>>> origin/master
   end
 end
