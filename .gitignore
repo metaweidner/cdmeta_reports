@@ -8,3 +8,6 @@ write_metadata.rb
 harvest_test_collections.rb
 harvest_test_collection_file_level_descriptive_metadata.rb
 iso_date_validator.rb
+irb_setup.rb
+open_refine_row_template.rb
+descriptive_metadata_open_refine.rb
